@@ -103,7 +103,7 @@ class Contenido_materia(models.Model):
     id_materia = models.ForeignKey(Materias_año,on_delete=models.CASCADE,null=True)
     descripcion = models.TextField(blank = True, null=True)
     user = models.ForeignKey(User, on_delete = models.CASCADE,null=True)
-    archivos = models.FileField(upload_to="",null=True)
+    archivos = models.FileField(upload_to="media",null=True)
     
     
     
