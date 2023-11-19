@@ -46,6 +46,10 @@
                                   {% csrf_token %}
                           
                                   {{form.as_p}}
+                                  {% for post in file %}
+                                  <h2>{{post.title}}</h2>
+                                  <a href="{{post.archivos.url}}" download="{{post.archivos.url}}">Download</a>
+                                  {% endfor %}
 
                                   <div class="boton">
                                     <button class="btn btn-primary">

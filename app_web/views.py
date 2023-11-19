@@ -1,3 +1,9 @@
+from django.http import HttpResponse, Http404
+from django.conf import settings
+import os
+
+
+
 # get_object_or_404: es para enviar un mensaje de error en la pagina
 # render: funciona para enviar un archivo html
 # redirect: funciona para redireccionar, usando el name correspondido en la URL
@@ -193,9 +199,11 @@ def detalles_tarea(request, id_materia):
         tareas = get_object_or_404(Contenido_materia, pk=id_materia, user=request.user)
         # En 'form = TareaForm(instance = tareas)' estamos tomando el form TareaForm y le estamos agg los datos que contiene 'tareas'
         form = Aggconten_materia(instance=tareas)
-        return render(request, 'conten_detail_task_materia.html', {
+        OUR_CONTEXT = {"file": Contenido_materia.objects.all()}
+
+        return render(request, 'conten_detail_task_materia.html',OUR_CONTEXT, {
             'tareas': tareas,
-            'form': form
+            'form': form,
         })
     else:
         try:
@@ -211,6 +219,17 @@ def detalles_tarea(request, id_materia):
 
             })
 
+def download(request, path):
+    # get the download path
+    download_path = os.path.join(settings.MEDIA_ROOT, path)
+    if os.path.exists(download_path):
+        with open(download_path, "rb") as fh:
+            response = HttpResponse(fh.read(), content_type="application/adminupload")
+            response["Content-Disposition"] = "inline; filename=" + os.path.basename(
+                download_path
+            )
+            return response
+    raise Http404
 
 @login_required   
 def eliminar(request, id_materia):
