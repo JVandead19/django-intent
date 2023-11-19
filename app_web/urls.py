@@ -1,13 +1,16 @@
-from django.urls import path
+from django.urls import path,re_path
 from . import views
-# from django.conf import settings
-# from django.conf.urls.static import static
+from django.conf import settings
+from django.views.static import serve
+from django.conf.urls.static import static
+from django.contrib import admin
 
 # Importamos las funciones que contiene views.py
 from . import views
 
 #Rutas
 urlpatterns = [
+    re_path(r"^download/(?P<path>.*)$", serve, {"document_root": settings.MEDIA_ROOT}),
     path('',views.index,name = 'index'),
     path('conocenos/',views.conocenos,name = 'conocenos'),
     path('lista/',views.lista,name = 'lista'),
@@ -26,5 +29,7 @@ urlpatterns = [
     path('aula/<int:id_materia>/detalles_tarea', views.detalles_tarea_alumno, name = 'detalles_alumn'),
     
 ]
-# if settings.DEBUG:
-#     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT),
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
+    
