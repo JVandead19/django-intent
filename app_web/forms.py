@@ -10,7 +10,7 @@ from django import forms
 class Aggconten_materia(forms.ModelForm):
     class Meta:
         model = Contenido_materia
-        fields = ['titulo','descripcion']
+        fields = ['titulo','descripcion','archivos']
         # # # Con widgets le agg un atributo class para el form, asi modificandolo
         # # widgets = {
         # #     'descripcion': forms.Textarea(attrs={'class': 'form-control', 'placeholder':'Ingresa descripcion de tarea'})
