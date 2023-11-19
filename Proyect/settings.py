@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'Proyect.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default = 'postgres://jhonn:kn1q6zSz8noTwbPOHDO1EvGJJeiZYDVk@dpg-clcmr3mg1b2c73f0ebn0-a/django_7ico',
+        default = 'postgresql://postgres:postgres@localhost/postgres',
         conn_max_age=600
     )
 }
