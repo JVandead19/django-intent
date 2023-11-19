@@ -39,8 +39,18 @@
                     <textarea name="" id="" cols="30" rows="10">{{tareas.descripcion}}</textarea>
                     
                     
-                    <a href="">{{form.archivos}}</a>
                     
+                    
+                    {% endfor %}
+
+                    {% for a in a %}
+                    {% if a.archivos == "" %}
+                      <!-- nada bicht -->
+                    {% else %}
+                    <a href="{{a.archivos.url}}" download="{{a.archivos.url}}">Download</a>
+                    
+                    {% endif %}
+
                     {% endfor %}
 
                     

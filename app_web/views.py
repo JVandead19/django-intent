@@ -120,13 +120,15 @@ def detalles_tarea_alumno(request, id_materia):
     if request.method == 'GET':
         # comparamos la PK con el id_tarea para verificar si son el mismo id y mostrar informacion de este, sino mostrara un get_object_or_404
         x = get_object_or_404(Contenido_materia, pk=id_materia)
+        a = Contenido_materia.objects.filter(pk=id_materia)
         num = id_materia
         form = Aggconten_materia(request.POST, instance=x)
         tareas = Contenido_materia.objects.filter(id = num)
         
         return render(request, 'conten_detail_task_materia_alumn.html', {
             'tareas': tareas,
-            'form': form
+            'form': form,
+            'a':a
         })       
       
    
@@ -199,16 +201,16 @@ def detalles_tarea(request, id_materia):
         tareas = get_object_or_404(Contenido_materia, pk=id_materia, user=request.user)
         # En 'form = TareaForm(instance = tareas)' estamos tomando el form TareaForm y le estamos agg los datos que contiene 'tareas'
         form = Aggconten_materia(instance=tareas)
-        OUR_CONTEXT = {"file": Contenido_materia.objects.filer(pk=id_materia, user=request.user)}
 
-        return render(request, 'conten_detail_task_materia.html',OUR_CONTEXT, {
+
+        return render(request, 'conten_detail_task_materia.html',{
             'tareas': tareas,
             'form': form,
         })
     else:
         try:
             tareas = get_object_or_404(Contenido_materia, pk=id_materia, user=request.user)
-            form = Aggconten_materia(request.POST, instance=tareas)
+            form = Aggconten_materia(request.POST,request.FILES,instance=tareas)
             form.save()
             return redirect('aula')
         except ValueError:
@@ -219,17 +221,17 @@ def detalles_tarea(request, id_materia):
 
             })
 
-def download(request, path):
-    # get the download path
-    download_path = os.path.join(settings.MEDIA_ROOT, path)
-    if os.path.exists(download_path):
-        with open(download_path, "rb") as fh:
-            response = HttpResponse(fh.read(), content_type="application/adminupload")
-            response["Content-Disposition"] = "inline; filename=" + os.path.basename(
-                download_path
-            )
-            return response
-    raise Http404
+# def download(request, path):
+#     # get the download path
+#     download_path = os.path.join(settings.MEDIA_ROOT, path)
+#     if os.path.exists(download_path):
+#         with open(download_path, "rb") as fh:
+#             response = HttpResponse(fh.read(), content_type="application/adminupload")
+#             response["Content-Disposition"] = "inline; filename=" + os.path.basename(
+#                 download_path
+#             )
+#             return response
+#     raise Http404
 
 @login_required   
 def eliminar(request, id_materia):

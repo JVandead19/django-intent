@@ -42,13 +42,11 @@
                       <br>
               
                               {{error}}
-                              <form method="POST">
+                              <form method="POST" enctype="multipart/form-data">
                                   {% csrf_token %}
                           
                                   {{form.as_p}}
-                                  {% for post in file %}
-                                  <a href="{{post.archivos.url}}" download="{{post.archivos.url}}">Download</a>
-                                  {% endfor %}
+                          
 
                                   <div class="boton">
                                     <button class="btn btn-primary">
