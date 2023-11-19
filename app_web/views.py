@@ -199,7 +199,7 @@ def detalles_tarea(request, id_materia):
         tareas = get_object_or_404(Contenido_materia, pk=id_materia, user=request.user)
         # En 'form = TareaForm(instance = tareas)' estamos tomando el form TareaForm y le estamos agg los datos que contiene 'tareas'
         form = Aggconten_materia(instance=tareas)
-        OUR_CONTEXT = {"file": Contenido_materia.objects.all()}
+        OUR_CONTEXT = {"file": Contenido_materia.objects.filer(pk=id_materia, user=request.user)}
 
         return render(request, 'conten_detail_task_materia.html',OUR_CONTEXT, {
             'tareas': tareas,
